@@ -27,6 +27,7 @@ const coffeeDescriptions = {
 
 async function fetchCoffeeMenu() {
  try {
+
   const response = await fetch("https://api.sampleapis.com/coffee/hot")
 
   if (!response.ok) {
