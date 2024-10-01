@@ -27,14 +27,13 @@ const coffeeDescriptions = {
 
 async function fetchCoffeeMenu() {
  try {
-  const response = await fetch("https://api.sampleapis.com/coffee/hot") 
+  const response = await fetch("https://api.sampleapis.com/coffee/hot")
 
   if (!response.ok) {
    throw new Error("Network response was not ok " + response.statusText)
   }
 
   const coffeeData = await response.json()
-
   renderCoffeeMenu(coffeeData)
  } catch (error) {
   console.error("There was a problem with the fetch operation:", error)
@@ -47,19 +46,54 @@ function renderCoffeeMenu(coffees) {
 
  coffees.forEach((coffee) => {
   const menuItem = document.createElement("div")
-  menuItem.classList.add("menu-item")
+  menuItem.classList.add("menu-item", "card", "m-3")
+  menuItem.setAttribute("data-category", coffee.title.toLowerCase()) // Store category for filtering
+
   const description = coffeeDescriptions[coffee.title] || "No description available for this coffee."
 
   menuItem.innerHTML = `
-              <img src="${coffee.image}" class="coffee-image img-fluid img-thumbnail" />
-              <h3>${coffee.title}</h3>
-              <p>${description}</p>
-              <span class="price">$${(Math.random() * (5 - 2) + 2).toFixed(2)}</span>
-              <a href="#contact" class="btn btn-primary">Order Now</a>
+              <img src="${coffee.image}" class="coffee-image img-fluid card-img-top" />
+              <div class="card-body">
+                  <h3 class="card-title">${coffee.title}</h3>
+                  <p class="card-text">${description}</p>
+                  <span class="price">$${(Math.random() * (5 - 2) + 2).toFixed(2)}</span>
+                  <a href="#contact" class="btn btn-primary">Order Now</a>
+              </div>
           `
   menuContainer.appendChild(menuItem)
  })
+
+ setupSearch()
 }
-window.onload = fetchCoffeeMenu
 
+function myFunction() {
+ var x = document.getElementById("myTopnav")
+ if (x.className === "topnav") {
+  x.className += " responsive"
+ } else {
+  x.className = "topnav"
+ }
+}
 
+function setupSearch() {
+ const searchInput = document.getElementById("search-input")
+ const searchBtn = document.getElementById("search-btn")
+ const menuItems = document.querySelectorAll(".menu-item")
+
+ // Search functionality
+ searchBtn.addEventListener("click", function () {
+  const query = searchInput.value.toLowerCase()
+  menuItems.forEach((item) => {
+   const title = item.querySelector(".card-title").textContent.toLowerCase()
+   if (title.includes(query)) {
+    item.style.display = ""
+   } else {
+    item.style.display = "none"
+   }
+  })
+ })
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+ fetchCoffeeMenu()
+})
