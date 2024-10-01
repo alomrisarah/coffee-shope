@@ -35,7 +35,6 @@ async function fetchCoffeeMenu() {
 
   const coffeeData = await response.json()
 
-  
   renderCoffeeMenu(coffeeData)
  } catch (error) {
   console.error("There was a problem with the fetch operation:", error)
@@ -43,25 +42,24 @@ async function fetchCoffeeMenu() {
 }
 
 function renderCoffeeMenu(coffees) {
- const menuContainer = document.getElementById("menu")
+ const menuContainer = document.querySelector(".menu-container")
  menuContainer.innerHTML = ""
 
  coffees.forEach((coffee) => {
   const menuItem = document.createElement("div")
   menuItem.classList.add("menu-item")
-
-  const description = coffeeDescriptions[coffee.title]
+  const description = coffeeDescriptions[coffee.title] || "No description available for this coffee."
 
   menuItem.innerHTML = `
-            <img src="${coffee.image}" class="coffee-image" />
-            <h3>${coffee.title}</h3>
-            <p>${description}</p>
-            <span class="price">$${(Math.random() * (5 - 2) + 2).toFixed(2)}</span>
-            <a href="#contact" class="btn btn-primary">Order Now</a>
-        `
-
+              <img src="${coffee.image}" class="coffee-image img-fluid img-thumbnail" />
+              <h3>${coffee.title}</h3>
+              <p>${description}</p>
+              <span class="price">$${(Math.random() * (5 - 2) + 2).toFixed(2)}</span>
+              <a href="#contact" class="btn btn-primary">Order Now</a>
+          `
   menuContainer.appendChild(menuItem)
  })
 }
-
 window.onload = fetchCoffeeMenu
+
+
