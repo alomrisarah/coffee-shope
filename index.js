@@ -35,7 +35,7 @@ async function fetchCoffeeMenu() {
 
   const coffeeData = await response.json()
 
-  // Call render function to display data
+  
   renderCoffeeMenu(coffeeData)
  } catch (error) {
   console.error("There was a problem with the fetch operation:", error)
@@ -50,7 +50,6 @@ function renderCoffeeMenu(coffees) {
   const menuItem = document.createElement("div")
   menuItem.classList.add("menu-item")
 
-  // Get the description from the custom descriptions object
   const description = coffeeDescriptions[coffee.title]
 
   menuItem.innerHTML = `
