@@ -25,76 +25,58 @@ const coffeeDescriptions = {
  Lemonad: "A classic lemon drink made from fresh lemons, sugar, and water.",
 }
 
-async function fetchCoffeeMenu() {
- try {
+// Function to fetch and display coffee items
+function fetchCoffee(type) {
+    const apiUrl = type === 'hot' 
+        ? 'https://api.sampleapis.com/coffee/hot' 
+        : 'https://api.sampleapis.com/coffee/iced';
 
-  const response = await fetch("https://api.sampleapis.com/coffee/hot")
-
-  if (!response.ok) {
-   throw new Error("Network response was not ok " + response.statusText)
-  }
-
-  const coffeeData = await response.json()
-  renderCoffeeMenu(coffeeData)
- } catch (error) {
-  console.error("There was a problem with the fetch operation:", error)
- }
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => displayCoffeeMenu(data))
+        .catch(error => console.error('Error fetching coffee data:', error));
 }
 
-function renderCoffeeMenu(coffees) {
- const menuContainer = document.querySelector(".menu-container")
- menuContainer.innerHTML = ""
-
- coffees.forEach((coffee) => {
-  const menuItem = document.createElement("div")
-  menuItem.classList.add("menu-item", "card", "m-3")
-  menuItem.setAttribute("data-category", coffee.title.toLowerCase()) // Store category for filtering
-
-  const description = coffeeDescriptions[coffee.title] || "No description available for this coffee."
-
-  menuItem.innerHTML = `
-              <img src="${coffee.image}" class="coffee-image img-fluid card-img-top" />
-              <div class="card-body">
-                  <h3 class="card-title">${coffee.title}</h3>
-                  <p class="card-text">${description}</p>
-                  <span class="price">$${(Math.random() * (5 - 2) + 2).toFixed(2)}</span>
-                  <a href="#contact" class="btn btn-primary">Order Now</a>
-              </div>
-          `
-  menuContainer.appendChild(menuItem)
- })
-
- setupSearch()
+// Function to display coffee items in cards
+function displayCoffeeMenu(coffees) {
+    const menuContainer = document.getElementById('menu');
+    menuContainer.innerHTML = ''; // Clear the previous results
+    coffees.forEach(coffee => {
+        const coffeeCard = `
+            <div class="menu-item mb-3">
+                <img src="${coffee.image}" class="coffee-image img-top" alt="${coffee.title}">
+                <div class="card-body">
+                    <h5 class="card-title">${coffee.title}</h5>
+                    <p class="card-text">${coffee.description}</p>
+                </div>
+            </div>
+        `
+        menuContainer.innerHTML += coffeeCard;
+    });
 }
 
-function myFunction() {
- var x = document.getElementById("myTopnav")
- if (x.className === "topnav") {
-  x.className += " responsive"
- } else {
-  x.className = "topnav"
- }
-}
+document.getElementById('hot-btn').addEventListener('click', () => {
+    fetchCoffee('hot');
+});
 
-function setupSearch() {
- const searchInput = document.getElementById("search-input")
- const searchBtn = document.getElementById("search-btn")
- const menuItems = document.querySelectorAll(".menu-item")
+document.getElementById('iced-btn').addEventListener('click', () => {
+    fetchCoffee('iced');
+});
 
- // Search functionality
- searchBtn.addEventListener("click", function () {
-  const query = searchInput.value.toLowerCase()
-  menuItems.forEach((item) => {
-   const title = item.querySelector(".card-title").textContent.toLowerCase()
-   if (title.includes(query)) {
-    item.style.display = ""
-   } else {
-    item.style.display = "none"
-   }
-  })
- })
-}
+document.getElementById('search-btn').addEventListener('click', () => {
+    const searchInput = document.getElementById('search-input').value.toLowerCase();
+    const coffeeCards = document.querySelectorAll('.card');
+    
+    coffeeCards.forEach(card => {
+        const title = card.querySelector('.card-title').innerText.toLowerCase();
+        if (title.includes(searchInput)) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+});
 
-document.addEventListener("DOMContentLoaded", function () {
- fetchCoffeeMenu()
-})
+window.onload = () => {
+    fetchCoffee('hot');
+};
