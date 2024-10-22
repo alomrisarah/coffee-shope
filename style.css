@@ -126,7 +126,6 @@ a:hover {
 }
 
 .service-card:hover {
-    transform: translateY(-5px);
     box-shadow: 0 8px 25px rgba(65, 59, 59, 0.2);
 }
 
@@ -163,22 +162,19 @@ a:hover {
 }
 
 .menu-item:hover {
-    transform: translateY(-5px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
 .coffee-image {
-    max-width: 100%;
-    height: auto;
+    width: 100%;
+    height: 300px;
     border-radius: 10px;
     margin: 0 auto;
     display: block;
     transition: transform 0.3s ease;
 }
 
-.coffee-image:hover {
-    transform: scale(1.1);
-}
+
 
 .menu-item h5 {
     font-family: 'Montserrat', sans-serif;
