@@ -16,15 +16,15 @@
 </head>
 
 <body>
-<div class="topnav" id="myTopnav">
-    <a href="#hero" class="active">Home</a>
-    <a href="#services">Services</a>
-    <a href="#menu">Menu</a>
-    <a href="#contact">Contact</a>
-    <a href="javascript:void(0);"  class="icon" onclick="myFunction()">
-        <i class="fa fa-bars"></i>
-    </a>
-</div>
+    <div class="topnav" id="myTopnav">
+        <a href="#hero" class="active">Home</a>
+        <a href="#services">Services</a>
+        <a href="#menu">Menu</a>
+        <a href="#contact">Contact</a>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+        </a>
+    </div>
 
 
     <section id="hero" class="hero bg-light text-center">
@@ -78,15 +78,17 @@
             <div class="col-md-6">
                 <div class="search-container d-flex align-items-center">
                     <input type="text" class="form-control" id="search-input"
-                        placeholder="Search for your favorite coffee..." 
-                    aria-label="Search input" />
+                        placeholder="Search for your favorite coffee..." aria-label="Search input" />
                     <button class="btn" id="search-btn" aria-label="Search">
                         <i class="fas fa-search"></i>
                     </button>
+                    <button class="btn btn-primary ml-2" id="hot-btn" aria-label="Hot Coffee">Hot</button>
+                    <button class="btn btn-secondary ml-2" id="iced-btn" aria-label="Iced Coffee">Iced</button>
                 </div>
             </div>
         </div>
     </div>
+
     <div id="menu" class="menu-container"></div>
 
     <section id="contact" class="contact py-5 bg-white">
